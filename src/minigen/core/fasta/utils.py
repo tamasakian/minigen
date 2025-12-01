@@ -14,3 +14,13 @@ def suffix_headers(records: list[SeqRecord], suffix: str) -> list[SeqRecord]:
         new_records.append(new_record)
     return new_records
 
+def filter_records(records: list[SeqRecord], filter_file: str) -> list[SeqRecord]:
+    new_records = []
+    with open(filter_file, "r") as filter_handle:
+        filters = set(line.strip() for line in filter_handle)
+    for record in records:
+        if record.id not in filters:
+            continue
+        new_records.append(record)
+    return new_records
+
