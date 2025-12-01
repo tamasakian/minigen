@@ -12,8 +12,13 @@
 !/src/minigen/cli/
 !/src/minigen/cli/main.py
 !/src/minigen/cli/fasta.py
+!/src/minigen/cli/ensembl.py
 
 !/src/minigen/core/
 !/src/minigen/core/fasta/
 !/src/minigen/core/fasta/io.py
 !/src/minigen/core/fasta/utils.py
+
+!/src/minigen/core/ensembl/
+!/src/minigen/core/ensembl/io.py
+!/src/minigen/core/ensembl/utils.py
