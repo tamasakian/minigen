@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# core/io.py
-
 def parse_gff3(path: str) -> list:
     records = []
     with open(path, "r") as handle:
