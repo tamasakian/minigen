@@ -8,7 +8,8 @@ def query_bed(records: list, feat_type: str, attr_key: str) -> list:
         attrs = record["attributes"]
         if attr_key not in attrs:
             continue
-        results.append((record["seqid"], attrs[attr_key], record["start"], record["end"]))
+        start_0 = int(record["start"]) - 1
+        results.append((record["seqid"], attrs[attr_key], start_0, record["end"]))
     return results
 
 def filter_records(records: list, filter_file: str) -> list:
