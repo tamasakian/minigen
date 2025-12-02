@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import typer
-from minigen.core.mcscanx.io import parse_gff3, write_bed
-from minigen.core.mcscanx.utils import query_bed
+from minigen.core.mcscanx.io import parse_gff3, parse_bed, write_bed
+from minigen.core.mcscanx.utils import query_bed, filter_records
 
 app = typer.Typer()
 
@@ -16,3 +16,13 @@ def gff3_to_bed(
     records = parse_gff3(input_file)
     bed_list = query_bed(records, feat_type, attr_key)
     write_bed(output_file, bed_list)
+
+@app.command("filter")
+def filter_bed(
+    input_file: str = typer.Argument(..., help="path to input bed"),
+    output_file: str = typer.Argument(..., help="path to output bed"),
+    filter_file: str = typer.Argument(..., help="path to gene list to retain"),
+):
+    records = parse_bed(input_file)
+    new_records = filter_records(records, filter_file)
+    write_bed(output_file, new_records)

@@ -24,6 +24,19 @@ def parse_gff3(path: str) -> list:
             records.append(record)
     return records
 
+def parse_bed(path: str) -> list:
+    bed_list = []
+    with open(path, "r") as handle:
+        for line in handle:
+            if line.startswith("#"):
+                continue
+            cols = line.strip().split("\t")
+            if len(cols) != 4:
+                continue
+            seqid, gene_id, start, end = cols
+            bed_list.append((seqid, gene_id, start, end))
+    return bed_list
+
 def write_bed(path: str, bed_list: list) -> None:
     with open(path, "w") as out:
         for seqid, gene_id, start, end in bed_list:
