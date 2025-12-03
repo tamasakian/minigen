@@ -8,23 +8,16 @@
 !/src/
 !/src/minigen/
 !/src/minigen/__init__.py
+!/src/minigen/cli.py
 
-!/src/minigen/cli/
-!/src/minigen/cli/main.py
-!/src/minigen/cli/ensembl.py
-!/src/minigen/cli/fasta.py
-!/src/minigen/cli/mcscanx.py
+!/src/minigen/commands/
+!/src/minigen/commands/*.py
 
 !/src/minigen/core/
+!/src/minigen/core/*.py
 
-!/src/minigen/core/ensembl/
-!/src/minigen/core/ensembl/io.py
-!/src/minigen/core/ensembl/utils.py
+!/src/minigen/io/
+!/src/minigen/io/*.py
 
-!/src/minigen/core/fasta/
-!/src/minigen/core/fasta/io.py
-!/src/minigen/core/fasta/utils.py
-
-!/src/minigen/core/mcscanx/
-!/src/minigen/core/mcscanx/io.py
-!/src/minigen/core/mcscanx/utils.py
+!/src/minigen/utils/
+!/src/minigen/utils/*.py

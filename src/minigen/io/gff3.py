@@ -22,7 +22,18 @@ def parse_gff3(path: str) -> list:
             records.append(record)
     return records
 
-def write_list(path: str, items: list) -> None:
+def write_gff3(path: str, records: list) -> None:
     with open(path, "w") as handle:
-        for item in items:
-            handle.write(f"{item}\n")
+        handle.write("##gff-version 3\n")
+        for record in records:
+            seqid = record["seqid"]
+            source = record["source"]
+            type_ = record["type"]
+            start = record["start"]
+            end = record["end"]
+            score = record["score"]
+            strand = record["strand"]
+            phase = record["phase"]
+            attributes = ";".join([f"{key}={value}" for key, value in record["attributes"].items()])
+            line = "\t".join(map(str, [seqid, source, type_, start, end, score, strand, phase, attributes]))
+            handle.write(line + "\n")

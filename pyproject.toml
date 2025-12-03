@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "minigen"
-version = "0.1"
-description = "A minimal genome analysis toolkit"
+version = "0.2"
+description = "a minimal genome analysis toolkit"
 readme = "README.md"
 requires-python = ">=3.9"
 
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-minigen = "minigen.cli.main:main"
+minigen = "minigen.cli:main"
 
 [tool.hatch.build.targets.wheel]
 package = ["src/minigen"]
