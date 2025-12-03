@@ -4,6 +4,19 @@ import typer
 
 app = typer.Typer(help="transform tools")
 
+@app.command("gff3-to-text")
+def gff3_to_text(
+    input_file: str = typer.Argument(..., help="path to input gff3 file"),
+    output_file: str = typer.Argument(..., help="path to output text file"),
+    attr_key: str = typer.Argument(..., help="attribute key for text output (e.g., ID, transcript_id, protein_id)"),
+):
+    from minigen.io.gff3 import parse_gff3
+    from minigen.core.gff3 import to_text
+    from minigen.io.text import write_text
+    records = parse_gff3(input_file)
+    ids = to_text(records, attr_key)
+    write_text(output_file, ids)
+
 @app.command("gff3-to-bed6")
 def gff3_to_bed6(
     input_file: str = typer.Argument(..., help="path to input gff3 file"),

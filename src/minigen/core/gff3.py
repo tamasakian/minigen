@@ -27,6 +27,15 @@ def extract_gff3_by_attributes(records: list, filters: list[str], key: str) -> l
         new_records.append(record)
     return new_records
 
+def to_text(records: list, key: str) -> list[str]:
+    ids = []
+    for record in records:
+        attrs = record["attributes"]
+        if key not in attrs:
+            continue
+        ids.append(attrs[key])
+    return ids
+
 def to_bed6(records: list, key: str) -> list:
     bed6_records = []
     for record in records:
