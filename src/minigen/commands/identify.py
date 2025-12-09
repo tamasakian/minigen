@@ -15,3 +15,15 @@ def ensembl_canonical(
     records = parse_gff3(input_file)
     canonical_ids = identify_canonical(records)
     write_text(output_file, canonical_ids)
+
+@app.command("augustus-longest")
+def augustus_longest(
+    input_file: str = typer.Argument(..., help="path to input gff3 file"),
+    output_file: str = typer.Argument(..., help="path to output text file"),
+    attr_key: str = typer.Argument(..., help="attribute key"),
+):
+    from minigen.io.gff3 import parse_gff3
+    from minigen.core.gff3 import identify_longest
+    records = parse_gff3(input_file)
+    longest_ids = identify_longest(records, attr_key)
+    write_text(output_file, longest_ids)

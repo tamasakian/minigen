@@ -80,3 +80,30 @@ def identify_canonical(records: list) -> list[str]:
             continue
         canonical_ids.append(attrs["transcript_id"])
     return canonical_ids
+
+def identify_longest(records: list, key: str) -> list[str]:
+    transcript_lengths = {}
+    for record in records:
+        if record["type"] != "CDS":
+            continue
+        attrs = record["attributes"]
+        if not key in attrs:
+            continue
+        transcript_id = attrs[key]
+        length = int(record["end"]) - int(record["start"])
+        transcript_lengths[transcript_id] = transcript_lengths.get(transcript_id, 0) + length
+
+    gene_to_transcripts = {}
+    for transcript, length in transcript_lengths.items():
+        if ".t" not in transcript:
+            continue
+        gene = transcript.split(".t")[0]
+        if gene not in gene_to_transcripts:
+            gene_to_transcripts[gene] = []
+        gene_to_transcripts[gene].append((transcript, length))
+
+    longest_ids = []
+    for gene, items in gene_to_transcripts.items():
+        best = max(items, key=lambda x: x[1])
+        longest_ids.append(best[0])
+    return longest_ids
