@@ -27,3 +27,17 @@ def augustus_longest(
     records = parse_gff3(input_file)
     longest_ids = identify_longest(records, attr_key)
     write_text(output_file, longest_ids)
+
+@app.command("blast-qry-tagonly")
+def blast_qry_tagonly(
+    input_file: str = typer.Argument(..., help="path to input blast file"),
+    output_file: str = typer.Argument(..., help="path to output text file"),
+    text_file: str = typer.Argument(..., help="path to text file with tags to identify"),
+):
+    from minigen.io.blast import parse_blast
+    from minigen.io.text import parse_text
+    from minigen.core.blast import identify_qry_with_tagonly
+    records = parse_blast(input_file)
+    tag_list = parse_text(text_file)
+    qry_list = identify_qry_with_tagonly(records, tag_list)
+    write_text(output_file, qry_list)
