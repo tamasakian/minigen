@@ -4,13 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "minigen"
-version = "0.2"
+version = "0.3"
 description = "a minimal genome analysis toolkit"
 readme = "README.md"
 requires-python = ">=3.9"
 
 dependencies = [
     "biopython>=1.8",
+    "ete4>=4.4.0",
     "rich>=13.0",
     "typer>=0.20.0",
 ]
