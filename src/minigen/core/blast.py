@@ -7,6 +7,14 @@ def get_tag(seqid: str) -> str | None:
         return None
     return seqid.split("|")[-1]
 
+def extract_blast_by_qseqid(records: list, filters: list[str]) -> list:
+    new_records = []
+    for record in records:
+        if record["qseqid"] not in filters:
+            continue
+        new_records.append(record)
+    return new_records
+
 def identify_qry_with_tagonly(records: list[dict], tag_list: list[str]) -> list[str]:
     allowed = set(tag_list)
     qry2tags = defaultdict(list)

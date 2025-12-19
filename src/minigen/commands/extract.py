@@ -83,3 +83,16 @@ def mcscanx_bed4_name(
     filters = parse_text(text_file)
     new_records = extract_mcscanx_bed4_by_name(records, filters)
     write_mcscanx_bed4(output_file, new_records)
+
+@app.command("blast-qseqid")
+def blast_qseqid(
+    input_file: str = typer.Argument(..., help="path to input blast file"),
+    output_file: str = typer.Argument(..., help="path to output blast file"),
+    text_file: str = typer.Argument(..., help="path to text file with ids to extract"),
+):
+    from minigen.io.blast import parse_blast, write_blast
+    from minigen.core.blast import extract_blast_by_qseqid
+    records = parse_blast(input_file)
+    filters = parse_text(text_file)
+    new_records = extract_blast_by_qseqid(records, filters)
+    write_blast(output_file, new_records)
