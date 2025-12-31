@@ -18,7 +18,7 @@ def to_homology_table(records: list[dict]) -> list[dict]:
         new_records.append({"qseqid": q, "rseqid": r})
     return new_records
 
-def extract_blast_by_qseqid(records: list[dict], filters: list[str]) -> list:
+def extract_blast_by_qseqid(records: list[dict], filters: list[str]) -> list[dict]:
     new_records = []
     for record in records:
         if record["qseqid"] not in filters:
@@ -37,6 +37,21 @@ def identify_qseqid_with_tag_only(records: list[dict], tag_list: list[str]) -> l
     matched = []
     for qseqid, tags in qry2tags.items():
         if not all(tag in allowed for tag in tags):
+            continue
+        matched.append(qseqid)
+    return matched
+
+def identify_qseqid_with_tag_any(records: list[dict], tag_list: list[str]) -> list[str]:
+    allowed = set(tag_list)
+    qry2tags = defaultdict(list)
+    for record in records:
+        qseqid = record["qseqid"]
+        rseqid = record["rseqid"]
+        tag = get_tag(rseqid)
+        qry2tags[qseqid].append(tag)
+    matched = []
+    for qseqid, tags in qry2tags.items():
+        if not any(tag in allowed for tag in tags):
             continue
         matched.append(qseqid)
     return matched
