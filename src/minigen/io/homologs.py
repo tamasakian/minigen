@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def write_homology_table(path: str, records: list[dict]) -> None:
+def write_homologs(path: str, records: list[dict]) -> None:
     with open(path, "w") as handle:
         for record in records:
             qseqid = record["qseqid"]
