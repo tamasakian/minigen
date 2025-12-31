@@ -7,7 +7,18 @@ def get_tag(seqid: str) -> str | None:
         return None
     return seqid.split("|")[-1]
 
-def extract_blast_by_qseqid(records: list, filters: list[str]) -> list:
+def to_homology_table(records: list[dict]) -> list[dict]:
+    seen = set()
+    new_records = []
+    for record in records:
+        q, r = record["qseqid"], record["rseqid"]
+        if q not in seen:
+            new_records.append({"qseqid": q, "rseqid": q})
+            seen.add(q)
+        new_records.append({"qseqid": q, "rseqid": r})
+    return new_records
+
+def extract_blast_by_qseqid(records: list[dict], filters: list[str]) -> list:
     new_records = []
     for record in records:
         if record["qseqid"] not in filters:
@@ -15,7 +26,7 @@ def extract_blast_by_qseqid(records: list, filters: list[str]) -> list:
         new_records.append(record)
     return new_records
 
-def identify_qry_with_tagonly(records: list[dict], tag_list: list[str]) -> list[str]:
+def identify_qseqid_with_tag_only(records: list[dict], tag_list: list[str]) -> list[str]:
     allowed = set(tag_list)
     qry2tags = defaultdict(list)
     for record in records:
