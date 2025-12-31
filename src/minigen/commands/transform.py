@@ -30,16 +30,16 @@ def gff3_to_bed6(
     bed6_records = to_bed6(records, attr_key)
     write_bed6(output_file, bed6_records)
 
-@app.command("gff3-to-mcscanx-bed4")
-def gff3_to_mcscanx_bed4(
+@app.command("gff3-to-bed4mcscanx")
+def gff3_to_bed4mcscanx(
     input_file: str = typer.Argument(..., help="path to input gff3 file"),
     output_file: str = typer.Argument(..., help="path to output mcscanx bed4 file"),
     attr_key: str = typer.Argument(..., help="attribute key for bed4 names (e.g., ID, transcript_id, protein_id)"),
 ):
     from minigen.io.gff3 import parse_gff3
-    from minigen.core.gff3 import to_mcscanx_bed4
-    from minigen.io.mcscanx_bed4 import write_mcscanx_bed4
+    from minigen.core.gff3 import to_bed4mcscanx
+    from minigen.io.bed4mcscanx import write_bed4mcscanx
     records = parse_gff3(input_file)
-    bed4_records = to_mcscanx_bed4(records, attr_key)
-    write_mcscanx_bed4(output_file, bed4_records)
+    bed4_records = to_bed4mcscanx(records, attr_key)
+    write_bed4mcscanx(output_file, bed4_records)
 

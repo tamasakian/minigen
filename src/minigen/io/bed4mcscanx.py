@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def parse_mcscanx_bed4(path: str) -> list[list[str]]:
+def parse_bed4mcscanx(path: str) -> list[list[str]]:
     records = []
     with open(path, "r") as handle:
         for line in handle:
@@ -14,7 +14,7 @@ def parse_mcscanx_bed4(path: str) -> list[list[str]]:
             records.append(record)
     return records
 
-def write_mcscanx_bed4(path: str, records: list[dict]) -> None:
+def write_bed4mcscanx(path: str, records: list[dict]) -> None:
     with open(path, "w") as handle:
         for record in records:
             chrom = record["chrom"]

@@ -58,31 +58,31 @@ def gff3_attributes(
     new_records = extract_gff3_by_attributes(records, filters, attr_key)
     write_gff3(output_file, new_records)
 
-@app.command("mcscanx-bed4-chrom")
-def mcscanx_bed4_chrom(
+@app.command("bed4mcscanx-chrom")
+def bed4mcscanx_chrom(
     input_file: str = typer.Argument(..., help="path to input mcscanx bed4 file"),
     output_file: str = typer.Argument(..., help="path to output mcscanx bed4 file"),
     text_file: str = typer.Argument(..., help="path to text file with ids to extract"),
 ):
-    from minigen.io.mcscanx_bed4 import parse_mcscanx_bed4, write_mcscanx_bed4
-    from minigen.core.mcscanx_bed4 import extract_mcscanx_bed4_by_chrom
-    records = parse_mcscanx_bed4(input_file)
+    from minigen.io.bed4mcscanx import parse_bed4mcscanx, write_bed4mcscanx
+    from minigen.core.bed4mcscanx import extract_bed4mcscanx_by_chrom
+    records = parse_bed4mcscanx(input_file)
     filters = parse_text(text_file)
-    new_records = extract_mcscanx_bed4_by_chrom(records, filters)
-    write_mcscanx_bed4(output_file, new_records)
+    new_records = extract_bed4mcscanx_by_chrom(records, filters)
+    write_bed4mcscanx(output_file, new_records)
 
-@app.command("mcscanx-bed4-name")
-def mcscanx_bed4_name(
+@app.command("bed4mcscanx-name")
+def bed4mcscanx_name(
     input_file: str = typer.Argument(..., help="path to input mcscanx bed4 file"),
     output_file: str = typer.Argument(..., help="path to output mcscanx bed4 file"),
     text_file: str = typer.Argument(..., help="path to text file with ids to extract"),
 ):
-    from minigen.io.mcscanx_bed4 import parse_mcscanx_bed4, write_mcscanx_bed4
-    from minigen.core.mcscanx_bed4 import extract_mcscanx_bed4_by_name
-    records = parse_mcscanx_bed4(input_file)
+    from minigen.io.bed4mcscanx import parse_bed4mcscanx, write_bed4mcscanx
+    from minigen.core.bed4mcscanx import extract_bed4mcscanx_by_name
+    records = parse_bed4mcscanx(input_file)
     filters = parse_text(text_file)
-    new_records = extract_mcscanx_bed4_by_name(records, filters)
-    write_mcscanx_bed4(output_file, new_records)
+    new_records = extract_bed4mcscanx_by_name(records, filters)
+    write_bed4mcscanx(output_file, new_records)
 
 @app.command("blast-qseqid")
 def blast_qseqid(

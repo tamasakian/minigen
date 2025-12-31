@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def extract_mcscanx_bed4_by_chrom(records: list, filters: set[str]) -> list:
+def extract_bed4mcscanx_by_chrom(records: list, filters: set[str]) -> list:
     new_records = []
     for record in records:
         if record["chrom"] not in filters:
@@ -8,7 +8,7 @@ def extract_mcscanx_bed4_by_chrom(records: list, filters: set[str]) -> list:
         new_records.append(record)
     return new_records
 
-def extract_mcscanx_bed4_by_name(records: list, filters: set[str]) -> list:
+def extract_bed4mcscanx_by_name(records: list, filters: set[str]) -> list:
     new_records = []
     for record in records:
         if record["name"] not in filters:
@@ -16,7 +16,7 @@ def extract_mcscanx_bed4_by_name(records: list, filters: set[str]) -> list:
         new_records.append(record)
     return new_records
 
-def tag_mcscanx_bed4_name(records: list, tag: str) -> list:
+def tag_bed4mcscanx_name(records: list, tag: str) -> list:
     new_records = []
     for record in records:
         new_name = f"{record["name"]}|{tag}"
