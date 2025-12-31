@@ -70,3 +70,19 @@ def identify_qseqid_with_tag_none(records: list[dict], tag_list: list[str]) -> l
             continue
         matched.append(qseqid)
     return matched
+
+def identify_qseqid_with_tag_all(records: list[dict], tag_list: list[str]) -> list[str]:
+    required = set(tag_list)
+    qry2tags = defaultdict(list)
+    for record in records:
+        qseqid = record["qseqid"]
+        rseqid = record["rseqid"]
+        tag = get_tag(rseqid)
+        qry2tags[qseqid].append(tag)
+    matched = []
+    for qseqid, tags in qry2tags.items():
+        if not all(tag in tags for tag in required):
+            continue
+        matched.append(qseqid)
+    return matched
+
