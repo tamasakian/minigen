@@ -55,3 +55,18 @@ def identify_qseqid_with_tag_any(records: list[dict], tag_list: list[str]) -> li
             continue
         matched.append(qseqid)
     return matched
+
+def identify_qseqid_with_tag_none(records: list[dict], tag_list: list[str]) -> list[str]:
+    allowed = set(tag_list)
+    qry2tags = defaultdict(list)
+    for record in records:
+        qseqid = record["qseqid"]
+        rseqid = record["rseqid"]
+        tag = get_tag(rseqid)
+        qry2tags[qseqid].append(tag)
+    matched = []
+    for qseqid, tags in qry2tags.items():
+        if any(tag in allowed for tag in tags):
+            continue
+        matched.append(qseqid)
+    return matched

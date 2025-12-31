@@ -55,3 +55,17 @@ def blast_tag_any(
     tag_list = parse_text(text_file)
     qry_list = identify_qseqid_with_tag_any(records, tag_list)
     write_text(output_file, qry_list)
+
+@app.command("blast-tag-none")
+def blast_tag_none(
+    input_file: str = typer.Argument(..., help="path to input blast file"),
+    output_file: str = typer.Argument(..., help="path to output text file"),
+    text_file: str = typer.Argument(..., help="path to text file with tags to identify"),
+):
+    from minigen.io.blast import parse_blast
+    from minigen.io.text import parse_text
+    from minigen.core.blast import identify_qseqid_with_tag_none
+    records = parse_blast(input_file)
+    tag_list = parse_text(text_file)
+    qry_list = identify_qseqid_with_tag_none(records, tag_list)
+    write_text(output_file, qry_list)
