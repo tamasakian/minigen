@@ -7,15 +7,15 @@ def get_tag(seqid: str) -> str | None:
         return None
     return seqid.split("|")[-1]
 
-def to_homology_table(records: list[dict]) -> list[dict]:
-    seen = set()
+def to_homologs(records: list[dict]) -> list[dict]:
+    group_id = set()
     new_records = []
     for record in records:
-        q, r = record["qseqid"], record["rseqid"]
-        if q not in seen:
-            new_records.append({"qseqid": q, "rseqid": q})
-            seen.add(q)
-        new_records.append({"qseqid": q, "rseqid": r})
+        qseqid, rseqid = record["qseqid"], record["rseqid"]
+        if qseqid not in group_id:
+            new_records.append({"group_id": qseqid, "member_id": qseqid})
+            group_id.add(qseqid)
+        new_records.append({"group_id": qseqid, "member_id": rseqid})
     return new_records
 
 def extract_blast_by_qseqid(records: list[dict], filters: list[str]) -> list[dict]:

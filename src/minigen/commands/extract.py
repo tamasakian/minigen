@@ -96,3 +96,15 @@ def blast_qseqid(
     filters = parse_text(text_file)
     new_records = extract_blast_by_qseqid(records, filters)
     write_blast(output_file, new_records)
+
+@app.command("homologs-min-size")
+def homologs_min_size(
+    input_file: str = typer.Argument(..., help="path to input homologs file"),
+    output_file: str = typer.Argument(..., help="path to output homologs file"),
+    min_size: int = typer.Argument(..., help="minimum homolog group size to retain"),
+):
+    from minigen.io.homologs import parse_homologs, write_homologs
+    from minigen.core.homologs import extract_homologs_by_min_size
+    records = parse_homologs(input_file)
+    new_records = extract_homologs_by_min_size(records, min_size)
+    write_homologs(output_file, new_records)
