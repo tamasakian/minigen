@@ -10,8 +10,8 @@ def blast_to_homologs(
     output_file: str = typer.Argument(..., help="path to output file for homologs"),
 ):
     from minigen.io.blast import parse_blast
-    from minigen.core.blast import to_homology_table
+    from minigen.core.blast import to_homologs
     from minigen.io.homologs import write_homologs
     records = parse_blast(input_file)
-    homology_records = to_homology_table(records)
+    homology_records = to_homologs(records)
     write_homologs(output_file, homology_records)

@@ -2,7 +2,7 @@
 
 from collections import Counter
 
-def extract_homology_by_min_size(records: list[dict], min_size: int) -> list[dict]:
+def extract_homologs_by_min_size(records: list[dict], min_size: int) -> list[dict]:
     group_list = [record["group_id"] for record in records]
     group2count = Counter(group_list)
     new_records = []
