@@ -45,6 +45,38 @@ def generate_upstream(fasta_records: list[SeqRecord], bed6_records: list[dict[st
         upstream_records.append(upstream_record)
     return upstream_records
 
+def generate_downstream(fasta_records: list[SeqRecord], bed6_records: list[dict[str, str]]) -> list[SeqRecord]:
+    fasta_dict = {record.id: record for record in fasta_records}
+    downstream_records = []
+    for bed in bed6_records:
+        chrom = bed["chrom"]
+        start = int(bed["start"])
+        end = int(bed["end"])
+        name = bed["name"]
+        strand = bed["strand"]
+        if chrom not in fasta_dict:
+            continue
+        chrom_record = fasta_dict[chrom]
+        seq = chrom_record.seq
+        chrom_size = len(seq)
+        downstream_start = max(0, start)
+        downstream_end = min(chrom_size, end)
+        extracted = ""
+        if downstream_start > downstream_end:
+            continue
+        extracted = str(seq[downstream_start:downstream_end])
+        start_pad = max(0, 0 - start)
+        end_pad = max(0, end - chrom_size)
+        padded_seq = Seq("N" * start_pad + extracted + "N" * end_pad)
+        if strand == "-":
+            padded_seq = padded_seq.reverse_complement()
+        downstream_record = copy(chrom_record)
+        downstream_record.id = name
+        downstream_record.description = ""
+        downstream_record.seq = padded_seq
+        downstream_records.append(downstream_record)
+    return downstream_records
+
 def tag_fasta(records: list[SeqRecord], tag: str) -> list[SeqRecord]:
     new_records = []
     for record in records:
