@@ -2,10 +2,39 @@
 
 from collections import defaultdict
 
-def get_tag(seqid: str) -> str | None:
+def _get_tag(seqid: str) -> str | None:
     if "|" not in seqid:
         return None
     return seqid.split("|")[-1]
+
+def _infer_strand(qstart: int, qend: int, rstart: int, rend: int) -> str:
+    q_forward = qstart < qend
+    r_forward = rstart < rend
+    return "+" if q_forward == r_forward else "-"
+
+def to_bed6(records: list[dict]) -> list[dict]:
+    new_records = []
+    for record in records:
+        qseqid = record["qseqid"]
+        qstart = int(record["qstart"]) - 1
+        qend = int(record["qend"])
+        rseqid = record["rseqid"]
+        rstart = int(record["rstart"]) -  1
+        rend = int(record["rend"])
+        chrom = rseqid
+        start = rstart
+        end = rend
+        name = f"{rseqid}|{qseqid}|{qstart}:{qend}"
+        score = float(record["bitscore"])
+        strand = _infer_strand(qstart, qend, rstart, rend)
+        new_records.append({
+            "chrom": chrom,
+            "start": start,
+            "end": end,
+            "name": name,
+            "score": score,
+            "strand": strand})
+    return new_records
 
 def to_homologs(records: list[dict]) -> list[dict]:
     group_id = set()
@@ -32,7 +61,7 @@ def identify_qseqid_with_tag_only(records: list[dict], tag_list: list[str]) -> l
     for record in records:
         qseqid = record["qseqid"]
         rseqid = record["rseqid"]
-        tag = get_tag(rseqid)
+        tag = _get_tag(rseqid)
         qry2tags[qseqid].append(tag)
     matched = []
     for qseqid, tags in qry2tags.items():
@@ -47,7 +76,7 @@ def identify_qseqid_with_tag_any(records: list[dict], tag_list: list[str]) -> li
     for record in records:
         qseqid = record["qseqid"]
         rseqid = record["rseqid"]
-        tag = get_tag(rseqid)
+        tag = _get_tag(rseqid)
         qry2tags[qseqid].append(tag)
     matched = []
     for qseqid, tags in qry2tags.items():
@@ -62,7 +91,7 @@ def identify_qseqid_with_tag_none(records: list[dict], tag_list: list[str]) -> l
     for record in records:
         qseqid = record["qseqid"]
         rseqid = record["rseqid"]
-        tag = get_tag(rseqid)
+        tag = _get_tag(rseqid)
         qry2tags[qseqid].append(tag)
     matched = []
     for qseqid, tags in qry2tags.items():
@@ -77,7 +106,7 @@ def identify_qseqid_with_tag_all(records: list[dict], tag_list: list[str]) -> li
     for record in records:
         qseqid = record["qseqid"]
         rseqid = record["rseqid"]
-        tag = get_tag(rseqid)
+        tag = _get_tag(rseqid)
         qry2tags[qseqid].append(tag)
     matched = []
     for qseqid, tags in qry2tags.items():

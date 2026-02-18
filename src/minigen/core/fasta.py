@@ -13,6 +13,31 @@ def extract_fasta(records: list[SeqRecord], filters: list[str]) -> list[SeqRecor
         new_records.append(record)
     return new_records
 
+def generate_by_bed6(fasta_records: list[SeqRecord], bed6_records: list[dict[str, str]]) -> list[SeqRecord]:
+    fasta_dict = {record.id: record for record in fasta_records}
+    new_records = []
+    for bed in bed6_records:
+        chrom = bed["chrom"]
+        start = int(bed["start"])
+        end = int(bed["end"])
+        name = bed["name"]
+        strand = bed["strand"]
+        if chrom not in fasta_dict:
+            continue
+        chrom_record = fasta_dict[chrom]
+        seq = chrom_record.seq
+        lo = min(start, end)
+        hi = max(start, end)
+        extracted = str(seq[lo:hi])
+        if strand == "-":
+            extracted = str(Seq(extracted).reverse_complement())
+        new_record = copy(chrom_record)
+        new_record.id = name
+        new_record.description = ""
+        new_record.seq = Seq(extracted)
+        new_records.append(new_record)
+    return new_records
+
 def generate_upstream(fasta_records: list[SeqRecord], bed6_records: list[dict[str, str]]) -> list[SeqRecord]:
     fasta_dict = {record.id: record for record in fasta_records}
     upstream_records = []
