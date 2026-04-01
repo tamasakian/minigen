@@ -49,3 +49,14 @@ def fasta_reverse_complement(
     records = parse_fasta(input_file)
     rc_records = generate_reverse_complement(records)
     write_fasta(output_file, rc_records)
+
+@app.command("fasta-cds-to-protein")
+def fasta_cds_to_protein(
+    input_file: str = typer.Argument(..., help="path to input fasta file with CDS sequences"),
+    output_file: str = typer.Argument(..., help="path to output fasta file for protein sequences"),
+):
+    from minigen.io.fasta import parse_fasta, write_fasta
+    from minigen.core.fasta import generate_cds_to_protein
+    records = parse_fasta(input_file)
+    protein_records = generate_cds_to_protein(records)
+    write_fasta(output_file, protein_records)

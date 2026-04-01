@@ -124,3 +124,14 @@ def generate_reverse_complement(records: list[SeqRecord]) -> list[SeqRecord]:
         )
         new_records.append(new_record)
     return new_records
+
+def generate_cds_to_protein(records: list[SeqRecord]) -> list[SeqRecord]:
+    new_records = []
+    for record in records:
+        new_record = SeqRecord(
+            seq=record.seq.translate(to_stop=True),
+            id=f"{record.id}|protein",
+            description=""
+        )
+        new_records.append(new_record)
+    return new_records
