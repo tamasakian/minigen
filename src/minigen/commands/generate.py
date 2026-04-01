@@ -38,3 +38,14 @@ def bed6_intron(
     records = parse_bed6(input_file)
     intron_records = generate_intron(records)
     write_bed6(output_file, intron_records)
+
+@app.command("fasta-reverse-complement")
+def fasta_reverse_complement(
+    input_file: str = typer.Argument(..., help="path to input fasta file"),
+    output_file: str = typer.Argument(..., help="path to output fasta file for reverse complement sequences"),
+):
+    from minigen.io.fasta import parse_fasta, write_fasta
+    from minigen.core.fasta import generate_reverse_complement
+    records = parse_fasta(input_file)
+    rc_records = generate_reverse_complement(records)
+    write_fasta(output_file, rc_records)

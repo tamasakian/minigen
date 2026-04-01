@@ -113,3 +113,14 @@ def tag_fasta(records: list[SeqRecord], tag: str) -> list[SeqRecord]:
         )
         new_records.append(new_record)
     return new_records
+
+def generate_reverse_complement(records: list[SeqRecord]) -> list[SeqRecord]:
+    new_records = []
+    for record in records:
+        new_record = SeqRecord(
+            seq=record.seq.reverse_complement(),
+            id=f"{record.id}|reverse_complement",
+            description=""
+        )
+        new_records.append(new_record)
+    return new_records
