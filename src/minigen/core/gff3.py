@@ -52,7 +52,7 @@ def to_bed6(records: list, key: str) -> list:
         bed6_records.append(bed6_record)
     return bed6_records
 
-def to_mcscanx_bed4(records: list, key: str) -> list:
+def to_bed4mcscanx(records: list, key: str) -> list:
     bed4_records = []
     for record in records:
         attrs = record["attributes"]
